@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\M_Akun_Admin;
 use App\Models\M_Data_Akun;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+// use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+
 
 class C_Data_Akun extends Controller
 {
@@ -23,8 +24,10 @@ class C_Data_Akun extends Controller
 
     public function homepage()
     {
-        return view('homepage'); // Pastikan file resources/views/homepage.blade.php ada
+        $user = auth()->user(); // Ambil user yang sedang login
+        return view('user.homepage_user', compact('user')); // Kirim ke view
     }
+
 
 
     public function login(Request $request)
