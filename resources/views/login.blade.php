@@ -57,29 +57,14 @@
                     @error('password')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
-                    <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#7f9b82] hover:text-[#1a3a33]">
+                    <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#7f9b82] hover:text-[#1a3a33]">
                         <i class="far fa-eye"></i>
                     </button>
                 </div>
             </div>
 
-            <div class="flex justify-between items-center text-sm font-semibold mb-6">
-                <label class="flex items-center gap-2 text-[#1a3a33]">
-                    <input type="checkbox" class="w-4 h-4 border border-black rounded" />
-                    Ingat aku
-                </label>
-                <a href="#" class="text-[#1a3a33] hover:underline">Lupa password?</a>
-            </div>
-
             <button type="submit" class="w-full bg-yellow-400 text-[#1a3a33] font-extrabold py-3 rounded-md hover:bg-yellow-500 transition mb-1">
                 Masuk
-            </button>
-
-            <p class="text-center text-[#1a3a33] font-semibold mb-1">or</p>
-
-            <button type="button" class="w-full border border-black rounded-md py-3 flex items-center justify-center gap-3 text-[#1a3a33] font-semibold hover:bg-gray-100 transition">
-                <img src="https://storage.googleapis.com/a1aa/image/116c0734-7c0d-4587-28aa-60ec7527d526.jpg" alt="Google logo" class="w-5 h-5" />
-                Masuk dengan Google
             </button>
 
             <p class="text-center text-[#1a3a33] mt-8 text-sm">
@@ -89,6 +74,17 @@
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById('togglePassword').addEventListener('click', function () {
+    const password = document.getElementById('password');
+    const icon = this.querySelector('i');
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
+});
+</script>
 
 </body>
 </html>

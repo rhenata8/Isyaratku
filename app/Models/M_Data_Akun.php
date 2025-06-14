@@ -9,7 +9,7 @@ class M_Data_Akun extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'data_akun';
+    protected $table = 'data_akun_user';
 
     protected $fillable = ['nama_lengkap', 'email', 'foto', 'phone', 'password'];
 

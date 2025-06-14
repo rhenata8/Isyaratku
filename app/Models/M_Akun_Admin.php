@@ -12,7 +12,7 @@ class M_Akun_Admin extends Model
 {
     use Notifiable;
 
-    protected $table = 'admins';
+    protected $table = 'data_akun_admin';
 
     protected $fillable = [
         'nama_lengkap',
