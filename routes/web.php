@@ -5,7 +5,8 @@ use App\Http\Controllers\C_Data_Akun;
 use App\Http\Controllers\Akun_admin;
 use App\Http\Controllers\login;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\C_Materi;
+// use App\Http\Controllers\C_Materi;
 
 Route::get('/', function () {
     return view('landing_page');
@@ -54,6 +55,18 @@ Route::group(['middleware' => function ($request, $next) {
     Route::delete('/admin/profile/foto', [akun_admin::class, 'deleteFoto'])->name('admin/profile.delete_foto');
 });
 
+
+
+// route materi admin
+Route::resource('admin/materi', C_Materi::class)->parameters(['materi' => 'material'])->names([
+        'index' => 'materi.index',
+        'create' => 'materi.create',
+        'store' => 'materi.store',
+        'show' => 'materi.show',
+        'edit' => 'materi.edit',
+        'update' => 'materi.update',
+        'destroy' => 'materi.destroy',
+    ]);
 
 
 
