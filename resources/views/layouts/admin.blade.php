@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
     <style>
         body {
@@ -25,23 +25,14 @@
         </div>
     </header>
 
-    {{-- Body --}}
+    {{-- Body - Konten Utama dan Sidebar --}}
     <div class="flex min-h-screen overflow-hidden">
         {{-- Sidebar --}}
-        {{-- <aside class="w-64 bg-[#0B3B2E] text-white flex flex-col px-6 py-8 space-y-6">
-            <nav class="space-y-4 text-sm">
-                <a href="#" class="block hover:text-[#FFB800]">Kelola Kursus</a>
-                <a href="#" class="block hover:text-[#FFB800]">Kelola Quiz</a>
-                <a href="#" class="block hover:text-[#FFB800]">Kelola Artikel</a>
-            </nav>
-        </aside> --}}
+        @include('components/admin/sidebar')
 
         {{-- Main Content --}}
-        <main class="flex-1  overflow-y-auto">
-            @include('components/admin/sidebar')
-        <div class="flex-1 p-6"> <!-- Konten utama -->
-             @yield('content')
-        </div>
+        <main class="flex-1 p-6 overflow-y-auto">
+            @yield('content')
         </main>
     </div>
 
