@@ -6,6 +6,7 @@ use App\Http\Controllers\Akun_admin;
 use App\Http\Controllers\login;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\C_Dashboard;
+use App\Http\Controllers\C_kuis;
 use App\Http\Controllers\C_Materi;
 // use App\Http\Controllers\C_Materi;
 
@@ -70,6 +71,13 @@ Route::resource('admin/materi', C_Materi::class)->parameters(['materi' => 'mater
     ]);
 
 Route::get('/admin/dashboard', [C_Dashboard::class, 'index'])->name('admin/dashboard');
+
+// Kursus
+    Route::get('/admin/kursus', [C_kuis::class, 'index'])->name('admin.kursus.index');
+    Route::get('/admin/kursus/{level}', [C_kuis::class, 'showLevel'])->name('admin.kursus.level');
+    Route::post('/admin/kursus/store', [C_kuis::class, 'create'])->name('admin.kursus.store');
+    Route::put('/admin/kursus/update/{id}', [C_kuis::class, 'update'])->name('admin.kursus.update');
+    Route::delete('/admin/kursus/delete/{id}', [C_kuis::class, 'delete'])->name('admin.kursus.delete');
 
 
 
