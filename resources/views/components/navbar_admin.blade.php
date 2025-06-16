@@ -1,4 +1,4 @@
-<nav class="bg-[#0B3B2E] flex items-center justify-between px-6 py-4">
+{{-- <nav class="bg-[#0B3B2E] flex items-center justify-between px-6 py-4">
     <div class="flex items-center space-x-4">
         <a class="text-white font-extrabold text-lg select-none">
             IsyaratKu
@@ -19,4 +19,4 @@
                      class="w-12 h-12 rounded-full object-cover shadow">
             </a>
         </div>
-</nav>
+</nav> --}}
