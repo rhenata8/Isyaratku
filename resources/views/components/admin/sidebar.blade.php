@@ -1,10 +1,17 @@
-<aside class="w-64 bg-[#0B3B2E] text-white flex flex-col px-6 py-8 space-y-6">
-    <h1 class="text-2xl font-bold mb-6">IsyaratKu Admin</h1>
-    <nav class="space-y-4 text-sm">
-        <a href="#" class="block hover:text-[#FFB800]">Dashboard</a>
-        <a href="#" class="block hover:text-[#FFB800]">Kelola Kursus</a>
-        <a href="#" class="block hover:text-[#FFB800]">Kelola Quiz</a>
-        <a href="#" class="block hover:text-[#FFB800]">Kelola Artikel</a>
-        <a href="#" class="block hover:text-[#FFB800]">Keluar</a>
+
+<aside class="w-64 bg-white border-r min-h-screen p-4">
+    <nav class="space-y-4">
+        <a href="#" class="block hover:text-blue-500">
+            <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+        </a>
+        <a href="#" class="block hover:text-blue-500">
+            <i class="fas fa-newspaper mr-2"></i> Artikel
+        </a>
+        <a href="#" class="block hover:text-blue-500">
+            <i class="fas fa-question-circle mr-2"></i> Kuis
+        </a>
+        <a href="#" class="block hover:text-blue-500">
+            <i class="fas fa-chart-bar mr-2"></i> Laporan Kuis
+        </a>
     </nav>
 </aside>
