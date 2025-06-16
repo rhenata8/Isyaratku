@@ -5,6 +5,7 @@ use App\Http\Controllers\C_Data_Akun;
 use App\Http\Controllers\Akun_admin;
 use App\Http\Controllers\login;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\C_Dashboard;
 use App\Http\Controllers\C_Materi;
 // use App\Http\Controllers\C_Materi;
 
@@ -68,7 +69,7 @@ Route::resource('admin/materi', C_Materi::class)->parameters(['materi' => 'mater
         'destroy' => 'materi.destroy',
     ]);
 
-
+Route::get('/admin/dashboard', [C_Dashboard::class, 'index'])->name('admin/dashboard');
 
 
 

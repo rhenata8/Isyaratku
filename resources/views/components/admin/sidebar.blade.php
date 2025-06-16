@@ -26,9 +26,6 @@
             <i class="fas fa-book-open mr-2"></i> Materi
         </a>
         <a href="#" class="block hover:text-blue-500">
-            <i class="fas fa-newspaper mr-2"></i> Artikel
-        </a>
-        <a href="#" class="block hover:text-blue-500">
             <i class="fas fa-question-circle mr-2"></i> Kuis
         </a>
         <a href="#" class="block hover:text-blue-500">
