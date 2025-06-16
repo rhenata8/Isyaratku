@@ -21,7 +21,7 @@ class akun_admin extends Controller
 
         if ($admin && Hash::check($request->password, $admin->password)) {
             session(['admin_logged_in' => true, 'admin_id' => $admin->id]);
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin/dashboard');
         }
 
         return back()->withErrors(['Email atau password salah']);
@@ -56,19 +56,25 @@ class akun_admin extends Controller
             return redirect()->route('login')->with('error', 'Admin tidak ditemukan');
         }
 
+        // --- Perubahan di bagian Validasi ---
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:data_akun_admin,email,' . $admin->id,
+            'phone' => 'nullable|string|max:20', // Tambahkan validasi untuk phone
             'password' => 'nullable|string|min:8|confirmed',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        // --- Akhir Perubahan Validasi ---
 
         $admin->nama_lengkap = $validated['nama_lengkap'];
-        $admin->email = $validated['email'];
+        // $admin->email = $validated['email']; // Hapus baris ini agar email tidak bisa diubah
+
+        // --- Penambahan untuk phone ---
+        $admin->phone = $validated['phone'];
+        // --- Akhir penambahan untuk phone ---
 
         if ($request->hasFile('foto')) {
-            if ($admin->foto && Storage::exists('public/foto/' . $admin->foto)) {
-                Storage::delete('public/foto/' . $admin->foto);
+            if ($admin->foto && Storage::disk('public')->exists('foto/' . $admin->foto)) { // Perbaikan path exists
+                Storage::disk('public')->delete('foto/' . $admin->foto);
             }
 
             $file = $request->file('foto');
@@ -83,14 +89,10 @@ class akun_admin extends Controller
 
         $admin->save();
 
-        if ($request->expectsJson()) {
-            return response()->json([
-                'success' => 'Profil berhasil diperbarui.',
-                'foto_url' => $admin->foto ? asset('storage/foto/' . $admin->foto) : null,
-            ]);
-        }
-
-        return redirect()->route('admin.profile')->with('success', 'Profil berhasil diperbarui.');
+        // --- Perubahan di bagian redirect ---
+        // Hapus blok if ($request->expectsJson()) { ... }
+        return redirect()->route('admin/profile')->with('success', 'Profil berhasil diperbarui.');
+        // --- Akhir Perubahan Redirect ---
     }
 
     public function editProfile(Request $request)
@@ -109,20 +111,6 @@ class akun_admin extends Controller
         return view('admin.profile_update', compact('admin'));
     }
 
-    public function dashboard(Request $request)
-    {
-        $adminId = $request->session()->get('admin_id');
-        $admin = M_Akun_Admin::find($adminId);
-
-        return view('admin.dashboard', compact('admin'));
-    }
-
-    public function logout()
-    {
-        session()->forget(['admin_logged_in', 'admin_id']);
-        return redirect()->route('login');
-    }
-
     public function deleteFoto(Request $request)
     {
         $adminId = $request->session()->get('admin_id');
@@ -132,20 +120,37 @@ class akun_admin extends Controller
 
         $admin = M_Akun_Admin::find($adminId);
         if ($admin && $admin->foto) {
-            $fotoPath = 'public/foto/' . $admin->foto;
-            if (Storage::exists($fotoPath)) {
-                Storage::delete($fotoPath);
+            $fotoPath = 'foto/' . $admin->foto; // Hapus 'public/' karena disk('public') sudah menanganinya
+            if (Storage::disk('public')->exists($fotoPath)) {
+                Storage::disk('public')->delete($fotoPath);
             }
             $admin->foto = null;
             $admin->save();
-            if ($request->expectsJson()) {
-                return response()->json(['success' => 'Foto profil berhasil dihapus.', 'foto_url' => null]);
-            }
-            return redirect()->route('admin.profile.edit')->with('success', 'Foto profil berhasil dihapus.');
+
+            // Redirect langsung, tanpa respons JSON
+            return redirect()->route('admin/profile.edit')->with('success', 'Foto profil berhasil dihapus.');
         }
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Tidak ada foto yang bisa dihapus.'], 422);
-        }
-        return redirect()->route('admin.profile.edit')->with('error', 'Tidak ada foto yang bisa dihapus.');
+
+        return redirect()->route('admin/profile.update')->with('error', 'Tidak ada foto yang bisa dihapus.');
     }
+
+
+
+
+
+    public function dashboard(Request $request)
+    {
+        $adminId = $request->session()->get('admin_id');
+        $admin = M_Akun_Admin::find($adminId);
+
+        return view('admin/dashboard', compact('admin'));
+    }
+
+    public function logout()
+    {
+        session()->forget(['admin_logged_in', 'admin_id']);
+        return redirect()->route('login');
+    }
+
+
 }
