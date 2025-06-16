@@ -132,12 +132,12 @@ public function updateProfile(Request $request)
                 Storage::delete($fotoPath);
             }
 
-        //     if ($request->expectsJson()) {
-        //     return response()->json([
-        //      'success' => 'Profil berhasil diperbarui.',
-        //     'foto_url' => $user->foto ? asset('storage/foto/' . $user->foto) : null,
-        //     ]);
-        // }
+            if ($request->expectsJson()) {
+            return response()->json([
+             'success' => 'Profil berhasil diperbarui.',
+            'foto_url' => $user->foto ? asset('storage/foto/' . $user->foto) : null,
+            ]);
+        }
             $user->foto = null;
             $user->save();
             if ($request->expectsJson()) {

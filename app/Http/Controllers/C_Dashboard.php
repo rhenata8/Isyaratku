@@ -16,7 +16,7 @@ class C_Dashboard extends Controller
 
         $admin = M_Akun_Admin::find(session('admin_id'));
 
-        return view('admin.dashboard', compact('jumlahUser', 'jumlahRespon', 'admin'));
+        return view('admin/dashboard', compact('jumlahUser', 'jumlahRespon', 'admin'));
     }
 }
 
