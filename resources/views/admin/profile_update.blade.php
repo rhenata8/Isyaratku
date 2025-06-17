@@ -33,7 +33,7 @@
             <div class="flex items-center gap-4 mb-4">
                 <img src="{{ asset('storage/foto/' . $admin->foto) }}" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover">
                 <form action="{{
-                ('admin.profile.delete_foto') }}" method="POST" class="inline-block"> {{-- UBAH INI --}}
+                route('admin/profile.delete_foto') }}" method="POST" class="inline-block"> {{-- UBAH INI --}}
                     @csrf
                     @method('DELETE')
                     <button type="submit" onclick="return confirm('Apakah yakin ingin menghapus foto?')" class="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700 ml-2">Hapus Foto</button>
