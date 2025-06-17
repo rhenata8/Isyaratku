@@ -19,6 +19,22 @@
                      class="w-12 h-12 rounded-full object-cover shadow">
             </a>
         </div> --}}
+        <div class="hidden md:flex gap-2 mr-8">
+    @isset($user)
+        <span class="mt-3.5 text-white font-medium text-sm">
+            {{ $user->nama_lengkap }}
+        </span>
+        <a href="{{ route('user/profile') }}">
+            <img src="{{ asset('storage/foto/' . $user->foto) }}" alt="Foto Profil"
+                 class="w-12 h-12 rounded-full object-cover shadow">
+        </a>
+    @else
+        <span class="mt-3.5 text-white font-medium text-sm">
+            Guest
+        </span>
+        <img src="https://ui-avatars.com/api/?name=Guest" class="w-12 h-12 rounded-full object-cover shadow" alt="Guest">
+    @endisset
+</div>
 </nav>
 
 

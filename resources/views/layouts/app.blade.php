@@ -21,7 +21,7 @@
         @include('components.navbar') {{-- Default navbar --}}
     @endif
 
-
+    
     {{-- Halaman Konten --}}
     <main class="min-h-screen">
         @yield('content')
