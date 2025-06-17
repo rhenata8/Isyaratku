@@ -1,5 +1,8 @@
 @extends('layouts.app') {{-- Asumsikan Anda punya layout default untuk user --}}
 
+@php
+use Illuminate\Support\Str;
+@endphp
 @section('content')
     <div class="container mx-auto p-6">
         <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Daftar Materi Pembelajaran</h2>
@@ -33,7 +36,7 @@
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-3 text-gray-800 line-clamp-2">{{ $materi->judul }}</h3>
                             <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                @php use Illuminate\Support\Str; @endphp
+
                                 {{ Str::limit(strip_tags($materi->isi), 120, '...') }}
                             </p>
                             <a href="{{ route('user.materi.show', $materi->id) }}" class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
