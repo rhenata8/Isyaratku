@@ -6,10 +6,10 @@
     </div>
     <div class="flex items-center space-x-6">
         <a class="text-white text-sm select-none" href="{{ route('user/homepage_user') }}">Beranda</a>
-        <a class="text-white text-sm select-none" href="#">Kuis</a>
+        <a class="text-white text-sm select-none" href="{{ route('user.kuis.index') }}">Kuis</a>
         <a class="text-white text-sm select-none" href="#">Materi</a>
     </div>
-    <div class="hidden md:flex gap-2 mr-8">
+    {{-- <div class="hidden md:flex gap-2 mr-8">
             <span class="mt-3.5 text-white font-medium text-sm">
                 {{ $user ? $user->nama_lengkap : 'Guest' }}
             </span>
@@ -17,7 +17,7 @@
                 <img src="{{ asset('storage/foto/' . $user->foto) }}" alt="Foto Profil"
                      class="w-12 h-12 rounded-full object-cover shadow">
             </a>
-        </div>
+        </div> --}}
 </nav>
 
 

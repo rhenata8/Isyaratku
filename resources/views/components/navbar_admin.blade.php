@@ -1,22 +1,19 @@
-{{-- <nav class="bg-[#0B3B2E] flex items-center justify-between px-6 py-4">
-    <div class="flex items-center space-x-4">
-        <a class="text-white font-extrabold text-lg select-none">
-            IsyaratKu
-        </a>
+@php
+    $adminId = session('admin_id');
+    $admin = \App\Models\M_Akun_Admin::find($adminId);
+@endphp
+
+<div class="bg-[#003B2C] text-white px-6 py-4 flex justify-between items-center fixed top-0 left-0 w-full z-50 h-[72px]">
+    <h1 class="text-xl font-bold">IsyaratKu</h1>
+    <div class="flex items-center gap-2">
+        @if($admin)
+            <img
+                src="{{ $admin->foto ? asset('storage/foto/' . $admin->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($admin->nama_lengkap) }}"
+                alt="Foto Admin"
+                class="w-10 h-10 rounded-full object-cover">
+            <span class="font-semibold">{{ $admin->nama_lengkap }}</span>
+        @else
+            <span class="font-semibold">Admin</span>
+        @endif
     </div>
-    <div class="flex items-center space-x-6">
-        <a class="text-white text-sm select-none" href="{{ route('admin/dashboard') }}">Dashboard</a>
-        <a class="text-white text-sm select-none" href="#">Kursus</a>
-        <a class="text-white text-sm select-none" href="#">Tentang Kami</a>
-        <a class="text-white text-sm select-none" href="#">Artikel</a>
-    </div>
-    <div class="hidden md:flex gap-2 mr-8">
-            <span class="mt-3.5 text-white font-medium text-sm">
-                {{ $admin ? $admin->nama_lengkap : 'Guest' }}
-            </span>
-            <a href="{{ route('admin/profile') }}">
-                <img src="{{ asset('storage/foto/' . $admin->foto) }}" alt="Foto Profil"
-                     class="w-12 h-12 rounded-full object-cover shadow">
-            </a>
-        </div>
-</nav> --}}
+</div>
