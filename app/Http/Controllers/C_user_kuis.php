@@ -22,8 +22,9 @@ class C_user_kuis extends Controller
     // Menampilkan pilihan level kuis untuk user
     public function index()
     {
-        $levels = ['pemula', 'menengah', 'mahir']; // Sesuaikan dengan level yang Anda miliki
-        return view('user.kuis.index', compact('levels'));
+        $levels = ['pemula', 'menengah', 'mahir'];
+        $user = Auth::user(); // Ambil data user
+        return view('user.kuis.index', compact('levels', 'user')); // Pass user
     }
 
     // Memulai kuis untuk level tertentu

@@ -20,8 +20,9 @@ class C_User_Materi extends Controller
 
         // Ambil semua materi, bisa juga ditambahkan paginasi jika materi banyak
         $materis = $query->orderBy('created_at', 'desc')->paginate(9); // 9 materi per halaman
+        $user = Auth::user();
 
-        return view('user.materi.index', compact('materis'));
+        return view('user.materi.index', compact('materis', 'user'));
     }
 
     /**
@@ -29,6 +30,7 @@ class C_User_Materi extends Controller
      */
     public function show(Materi_admin $materi) // Menggunakan Route Model Binding
     {
-        return view('user.materi.show', compact('materi'));
+        $user = Auth::user(); // Mengambil data user yang sedang login
+        return view('user.materi.show', compact('materi', 'user'));
     }
 }

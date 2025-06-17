@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin\Materi_admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Material;
 use Illuminate\Support\Facades\Storage;
@@ -16,12 +17,13 @@ class C_Materi extends Controller
 
     if ($request->has('search') && $request->search != '') {
         $query->where('judul', 'like', '%' . $request->search . '%')
-              ->orWhere('isi', 'like', '%' . $request->search . '%');
+        ->orWhere('isi', 'like', '%' . $request->search . '%');
     }
 
     $materials = $query->paginate(10);
+    $user = Auth::user();
 
-    return view('admin.materi.index', compact('materials'));
+    return view('admin.materi.index', compact('materials', 'user'));
 }
 
 
@@ -49,7 +51,8 @@ public function store(Request $request)
 
 public function show(Materi_admin $material)
 {
-    return view('admin.materi.show', compact('material'));
+    $user = Auth::user();
+    return view('admin.materi.show', compact('material', 'user'));
 }
 
 public function edit(Materi_admin $material)
