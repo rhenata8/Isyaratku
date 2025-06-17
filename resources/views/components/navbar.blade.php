@@ -7,7 +7,8 @@
     <div class="flex items-center space-x-6">
         <a class="text-white text-sm select-none" href="{{ route('user/homepage_user') }}">Beranda</a>
         <a class="text-white text-sm select-none" href="{{ route('user.kuis.index') }}">Kuis</a>
-        <a class="text-white text-sm select-none" href="#">Materi</a>
+        <a class="text-white text-sm select-none" href="{{ route('user.materi.index') }}">Materi</a>
+
     </div>
     {{-- <div class="hidden md:flex gap-2 mr-8">
             <span class="mt-3.5 text-white font-medium text-sm">
