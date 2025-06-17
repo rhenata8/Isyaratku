@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-{{-- Menghapus div class="flex" dan div class="w-full p-6" yang tidak perlu di sini --}}
-{{-- Karena layout admin sudah menanganinya dengan tag <main> --}}
+
 
 <h2 class="text-xl font-bold mb-4 capitalize">Kuis Level {{ $level }}</h2>
 
@@ -35,7 +34,7 @@
             <tr>
                 <th>Pertanyaan</th>
                 <th>Jawaban</th>
-            
+
             </tr>
         </thead>
         <tbody id="questions-table-body">
@@ -53,7 +52,7 @@
     </table>
 </div>
 
-@endsection {{-- Akhir dari section content --}}
+@endsection
 
 @push('scripts')
 <script>
@@ -65,29 +64,29 @@ document.addEventListener('DOMContentLoaded', function () {
     addQuestionForm.addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent default form submission
 
-        const formData = new FormData(this); // Get form data
+        const formData = new FormData(this); 
 
         // Clear previous messages
         ajaxMessage.classList.add('hidden');
         ajaxMessage.textContent = '';
         ajaxMessage.classList.remove('bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
 
-        fetch(this.action, { // Send AJAX request to the form's action URL
+        fetch(this.action, {
             method: 'POST',
             body: formData,
             headers: {
-                'X-Requested-With': 'XMLHttpRequest', // Important for Laravel to detect AJAX
+                'X-Requested-With': 'XMLHttpRequest',
             }
         })
-        .then(response => response.json()) // Parse JSON response
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Show success message
+
                 ajaxMessage.classList.remove('hidden');
                 ajaxMessage.classList.add('bg-green-100', 'text-green-700');
                 ajaxMessage.textContent = data.message;
 
-                // Add new question to the table
+
                 const newRow = `
                     <tr class="border-t" id="question-${data.question.id}">
                         <td>${data.question.pertanyaan}</td>
@@ -98,13 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         </td>
                     </tr>
                 `;
-                questionsTableBody.insertAdjacentHTML('beforeend', newRow); // Add to the end of the table body
+                questionsTableBody.insertAdjacentHTML('beforeend', newRow);
 
-                // Clear the form
+
                 addQuestionForm.reset();
 
             } else {
-                // Show error message
+
                 ajaxMessage.classList.remove('hidden');
                 ajaxMessage.classList.add('bg-red-100', 'text-red-700');
                 ajaxMessage.textContent = data.message || 'Terjadi kesalahan. Silakan coba lagi.';
@@ -125,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Optional: Implement AJAX for Delete button (similar to add)
+
     questionsTableBody.addEventListener('click', function(e) {
         if (e.target.classList.contains('delete-btn')) {
             const questionId = e.target.dataset.id;
