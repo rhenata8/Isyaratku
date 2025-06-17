@@ -12,7 +12,7 @@ class C_Dashboard extends Controller
     public function index()
     {
         $jumlahUser = M_Data_Akun::count();
-        $jumlahRespon = DB::table('respon_kuis')->count(); // Ganti sesuai nama tabel
+        $jumlahRespon = DB::table('respon_kuis')->count(); 
 
         $admin = M_Akun_Admin::find(session('admin_id'));
 

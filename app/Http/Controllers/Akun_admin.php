@@ -56,21 +56,16 @@ class akun_admin extends Controller
             return redirect()->route('login')->with('error', 'Admin tidak ditemukan');
         }
 
-        // --- Perubahan di bagian Validasi ---
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20', // Tambahkan validasi untuk phone
             'password' => 'nullable|string|min:8|confirmed',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        // --- Akhir Perubahan Validasi ---
 
         $admin->nama_lengkap = $validated['nama_lengkap'];
-        // $admin->email = $validated['email']; // Hapus baris ini agar email tidak bisa diubah
 
-        // --- Penambahan untuk phone ---
         $admin->phone = $validated['phone'];
-        // --- Akhir penambahan untuk phone ---
 
         if ($request->hasFile('foto')) {
             if ($admin->foto && Storage::disk('public')->exists('foto/' . $admin->foto)) { // Perbaikan path exists
@@ -89,10 +84,8 @@ class akun_admin extends Controller
 
         $admin->save();
 
-        // --- Perubahan di bagian redirect ---
-        // Hapus blok if ($request->expectsJson()) { ... }
+
         return redirect()->route('admin/profile')->with('success', 'Profil berhasil diperbarui.');
-        // --- Akhir Perubahan Redirect ---
     }
 
     public function editProfile(Request $request)
@@ -120,14 +113,13 @@ class akun_admin extends Controller
 
         $admin = M_Akun_Admin::find($adminId);
         if ($admin && $admin->foto) {
-            $fotoPath = 'foto/' . $admin->foto; // Hapus 'public/' karena disk('public') sudah menanganinya
+            $fotoPath = 'foto/' . $admin->foto;
             if (Storage::disk('public')->exists($fotoPath)) {
                 Storage::disk('public')->delete($fotoPath);
             }
             $admin->foto = null;
             $admin->save();
 
-            // Redirect langsung, tanpa respons JSON
             return redirect()->route('admin/profile.edit')->with('success', 'Foto profil berhasil dihapus.');
         }
 

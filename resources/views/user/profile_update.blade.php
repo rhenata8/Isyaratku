@@ -15,22 +15,36 @@
             <h1 class="text-2xl font-bold mb-4">Ubah Profil</h1>
 
             @if (session('success'))
-                <div id="alert-success" class="mb-4 p-2 bg-green-100 text-green-800 rounded">{{ session('success') }}</div>
+                <div class="mb-4 p-2 bg-green-100 text-green-800 rounded">{{ session('success') }}</div>
             @endif
             @if (session('error'))
-                <div id="alert-error" class="mb-4 p-2 bg-red-100 text-red-800 rounded">{{ session('error') }}</div>
+                <div class="mb-4 p-2 bg-red-100 text-red-800 rounded">{{ session('error') }}</div>
+            @endif
+            @if ($errors->any())
+                <div class="mb-4 p-2 bg-red-100 text-red-800 rounded">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
 
             {{-- Foto Profil Preview dan Hapus (di luar form utama) --}}
             @if ($user->foto)
             <div class="flex items-center gap-4 mb-4">
                 <img src="{{ asset('storage/foto/' . $user->foto) }}" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover">
-                <form id="hapus-foto-form" action="{{ route('user/profile.delete_foto') }}" method="POST" class="inline ml-2">
+                <form action="{{
+                ('user/profile.delete_foto') }}" method="POST" class="inline-block"> {{-- UBAH INI --}}
                     @csrf
                     @method('DELETE')
-                    <button type="button" onclick="ajaxHapusFoto(event)" class="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700 ml-2">Hapus Foto</button>
+                    <button type="submit" onclick="return confirm('Apakah yakin ingin menghapus foto?')" class="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700 ml-2">Hapus Foto</button>
                 </form>
             </div>
+            @else
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs">No Photo</div>
+                </div>
             @endif
 
             <form id="profile-update-form" action="{{ route('user/profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
@@ -54,7 +68,7 @@
                 {{-- Email --}}
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" id="email" required
+                    <input type="email" name="email" id="email" readonly
                         value="{{ old('email', $user->email) }}"
                         class="mt-1 w-full border rounded p-2 bg-gray-100">
                 </div>
