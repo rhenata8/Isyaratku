@@ -110,60 +110,110 @@ public function editProfile()
 //         return back()->with('error', 'Gagal menyimpan perubahan.');
 //     }
 // }
+    // public function updateProfile(Request $request)
+    // {
+    //     $user = Auth::user();
+
+    //     // --- TAMBAHKAN PENGECEKAN INI ---
+    //     if (!$user) {
+    //         dd('DEBUG: User is NULL at start of updateProfile. Redirecting to login.');
+    //         return redirect()->route('login')->with('error', 'Anda harus login untuk memperbarui profil.');
+    //     }
+    //     // -----------------------------
+
+    //     $validated = $request->validate([
+    //         'nama_lengkap' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:data_akun_user,email,' . $user->id,
+    //         'phone' => 'nullable|string|max:20',
+    //         'password' => 'nullable|string|min:8|confirmed',
+    //         'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+    //     ]);
+
+    //     $user->nama_lengkap = $validated['nama_lengkap'];
+    //     $user->email = $validated['email'];
+    //     $user->phone = $validated['phone'] ?? $user->phone;
+
+    //     if ($request->hasFile('foto')) {
+    //         if ($user->foto && Storage::exists('public/foto/' . $user->foto)) {
+    //             Storage::delete('public/foto/' . $user->foto);
+    //         }
+    //         $file = $request->file('foto');
+    //         $filename = time() . '.' . $file->getClientOriginalExtension();
+    //         $file->storeAs('foto', $filename, 'public');
+    //         $user->foto = $filename;
+    //     }
+
+    //     if (!empty($validated['password'])) {
+    //         $user->password = Hash::make($validated['password']);
+    //     }
+
+    //     if ($request->expectsJson()) {
+
+
+    //         if ($user->save()) {
+    //             return response()->json([
+    //                 'success' => 'Profil berhasil diperbarui.',
+    //                 'foto_url' => $user->foto ? asset('storage/foto/' . $user->foto) : null,
+    //             ]);
+    //         } else {
+    //             return response()->json(['error' => 'Gagal menyimpan perubahan.'], 500);
+    //         }
+    //     }
+
+
+    //     if ($user->save()) {
+    //         return redirect()->route('user/profile')->with('success', 'Profil berhasil diperbarui.');
+    //     } else {
+    //         return back()->with('error', 'Gagal menyimpan perubahan.');
+    //     }
+    // }
+
     public function updateProfile(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        // --- TAMBAHKAN PENGECEKAN INI ---
-        if (!$user) {
-            dd('DEBUG: User is NULL at start of updateProfile. Redirecting to login.');
-            return redirect()->route('login')->with('error', 'Anda harus login untuk memperbarui profil.');
-        }
-        // -----------------------------
-
-        $validated = $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:data_akun_user,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            'password' => 'nullable|string|min:8|confirmed',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-        ]);
-
-        $user->nama_lengkap = $validated['nama_lengkap'];
-        $user->email = $validated['email'];
-        $user->phone = $validated['phone'] ?? $user->phone;
-
-        if ($request->hasFile('foto')) {
-            if ($user->foto && Storage::exists('public/foto/' . $user->foto)) {
-                Storage::delete('public/foto/' . $user->foto);
-            }
-            $file = $request->file('foto');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('foto', $filename, 'public');
-            $user->foto = $filename;
-        }
-
-        if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
-        }
-         dd('DEBUG: User is NULL at start of updateProfile. Redirecting to login.');
-        if ($request->expectsJson()) {
-            if ($user->save()) {
-                return response()->json([
-                    'success' => 'Profil berhasil diperbarui.',
-                    'foto_url' => $user->foto ? asset('storage/foto/' . $user->foto) : null,
-                ]);
-            } else {
-                return response()->json(['error' => 'Gagal menyimpan perubahan.'], 500);
-            }
-        }
-
-        if ($user->save()) {
-            return redirect()->route('user/profile')->with('success', 'Profil berhasil diperbarui.');
-        } else {
-            return back()->with('error', 'Gagal menyimpan perubahan.');
-        }
+    // Validasi user login
+    if (!$user || !$user instanceof \App\Models\M_Data_Akun) {
+        return redirect()->route('login')->with('error', 'Anda harus login untuk memperbarui profil.');
     }
+
+    // Validasi input
+    $validated = $request->validate([
+        'nama_lengkap' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:data_akun_user,email,' . $user->id,
+        'phone' => 'nullable|string|max:20',
+        'password' => 'nullable|string|min:8|confirmed',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Update field basic
+    $user->nama_lengkap = $validated['nama_lengkap'];
+    $user->email = $validated['email'];
+    $user->phone = $validated['phone'] ?? $user->phone;
+
+    // Jika ada file foto baru, hapus lama dan simpan baru
+    if ($request->hasFile('foto')) {
+        if ($user->foto && Storage::disk('public')->exists('foto/' . $user->foto)) {
+            Storage::disk('public')->delete('foto/' . $user->foto);
+        }
+
+        $file = $request->file('foto');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('foto', $filename, 'public');
+        $user->foto = $filename;
+    }
+
+    // Jika password diisi, update password baru
+    if (!empty($validated['password'])) {
+        $user->password = Hash::make($validated['password']);
+    }
+
+    // Simpan perubahan
+    $user->save();
+
+    return redirect()->route('user/profile')->with('success', 'Profil berhasil diperbarui.');
+}
+
 
     public function homepage_user() {
     $user = Auth::user();
@@ -205,42 +255,21 @@ public function editProfile()
     //     return redirect()->route('user/profile.edit')->with('error', 'Tidak ada foto yang bisa dihapus.');
     // }
     public function deleteFoto(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        // --- TAMBAHKAN PENGECEKAN INI ---
-
-        dd('DEBUG: User is NULL at start of deleteFoto. Redirecting to login.'); // Tambahkan debug ini
-        if (!$user) {
-            if ($request->expectsJson()) {
-                return response()->json(['error' => 'Anda harus login untuk menghapus foto profil.'], 401);
-            }
-            return redirect()->route('login')->with('error', 'Anda harus login untuk menghapus foto profil.');
-        }
-        // -----------------------------
-
-        $fotoPath = 'public/foto/' . $user->foto;
-
-        if ($user->foto) {
-            if (Storage::exists($fotoPath)) {
-                Storage::delete($fotoPath);
-            }
-
-            $user->foto = null; // Set foto menjadi null setelah dihapus
-
-            dd('DEBUG: User object before deleteFoto save:', $user);
-            $user->save(); // Simpan perubahan ke database
-
-            if ($request->expectsJson()) {
-                return response()->json(['success' => 'Foto profil berhasil dihapus.', 'foto_url' => null]);
-            }
-            return redirect()->route('user/profile.edit')->with('success', 'Foto profil berhasil dihapus.');
-        }
-
-        // Jika tidak ada foto untuk dihapus
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Tidak ada foto yang bisa dihapus.'], 422);
-        }
-        return redirect()->route('user/profile.edit')->with('error', 'Tidak ada foto yang bisa dihapus.');
+    if (!$user || !$user instanceof \App\Models\M_Data_Akun) {
+        return redirect()->route('login')->with('error', 'Anda harus login sebagai user.');
     }
+
+    if ($user->foto && Storage::exists('public/foto/' . $user->foto)) {
+        Storage::delete('public/foto/' . $user->foto);
+    }
+
+    $user->foto = null;
+    $user->save();
+
+    return redirect()->route('user/profile.edit')->with('success', 'Foto profil berhasil dihapus.');
+}
+
 }

@@ -98,99 +98,13 @@
                 <div class="flex gap-4 mt-6">
                     <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Simpan</button>
                     <a href="{{ route('user/profile') }}" class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400">Batal</a>
-                    {{-- <a href="{{ route('user/profile') }}"
-                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition">
-                        Kembali
-                    </a> --}}
+
                 </div>
             </form>
 
         </div>
     </main>
 
-    <script>
-        // AJAX untuk hapus foto
-        function ajaxHapusFoto(e) {
-            e.preventDefault();
-            if (!confirm('Apakah yakin ingin menghapus foto?')) {
-                tampilkanAlert('Foto profil batal dihapus.', false);
-                return;
-            }
-            const form = document.getElementById('hapus-foto-form');
-            fetch(form.action, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': form.querySelector('[name=_token]').value,
-                    'Accept': 'application/json',
-                },
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    tampilkanAlert(data.success, true);
-                    // Hilangkan foto dan tombol hapus
-                    document.querySelector('#hapus-foto-form').parentElement.style.display = 'none';
-                    const img = document.querySelector('img[alt="Foto Profil"]');
-                    if (img) img.remove();
-                } else if (data.error) {
-                    tampilkanAlert(data.error, false);
-                }
-            })
-            .catch(() => tampilkanAlert('Terjadi kesalahan saat menghapus foto.', false));
-        }
-
-        // AJAX untuk update profil
-        const profileForm = document.getElementById('profile-update-form');
-        if (profileForm) {
-            profileForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(profileForm);
-                fetch(profileForm.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': profileForm.querySelector('[name=_token]').value,
-                        'Accept': 'application/json',
-                    },
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        tampilkanAlert(data.success, true);
-                        // Jika ada foto baru, update preview foto
-                        if (data.foto_url) {
-                            let img = document.querySelector('img[alt="Foto Profil"]');
-                            if (!img) {
-                                // Jika belum ada img, buat baru
-                                img = document.createElement('img');
-                                img.alt = 'Foto Profil';
-                                img.className = 'w-24 h-24 rounded-full object-cover';
-                                const previewDiv = document.createElement('div');
-                                previewDiv.className = 'flex items-center gap-4 mb-4';
-                                previewDiv.appendChild(img);
-                                profileForm.parentElement.insertBefore(previewDiv, profileForm);
-                            }
-                            img.src = data.foto_url + '?t=' + new Date().getTime(); // force reload
-                        }
-                    } else if (data.error) {
-                        tampilkanAlert(data.error, false);
-                    } else if (data.errors) {
-                        tampilkanAlert(Object.values(data.errors).join('\n'), false);
-                    }
-                })
-                .catch(() => tampilkanAlert('Terjadi kesalahan saat update profil.', false));
-            });
-        }
-
-        function tampilkanAlert(pesan, sukses) {
-            let alert = document.getElementById('alert-success') || document.getElementById('alert-error');
-            if (alert) alert.remove();
-            const div = document.createElement('div');
-            div.id = sukses ? 'alert-success' : 'alert-error';
-            div.className = 'mb-4 p-2 rounded ' + (sukses ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800');
-            div.innerText = pesan;
-            document.querySelector('main').prepend(div);
-        }
-    </script>
+    
 </body>
 </html>
