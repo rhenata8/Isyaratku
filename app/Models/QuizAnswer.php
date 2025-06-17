@@ -10,7 +10,7 @@ class QuizAnswer extends Model
 {
     use HasFactory;
 
-    protected $table = 'quiz_answers'; // Pastikan nama tabel di DB Anda adalah quiz_answers
+    protected $table = 'quiz_answers';
 
     protected $fillable = [
         'quiz_attempt_id',
@@ -26,6 +26,6 @@ class QuizAnswer extends Model
 
     public function question()
     {
-        return $this->belongsTo(Kuis::class, 'question_id'); // Menghubungkan ke model Kuis
+        return $this->belongsTo(Kuis::class, 'question_id'); 
     }
 }

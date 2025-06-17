@@ -1,4 +1,4 @@
-@extends('layouts.app') {{-- Asumsikan Anda punya layout default untuk user --}}
+@extends('layouts.app') 
 
 @section('content')
     <div class="container mx-auto p-6">

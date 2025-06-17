@@ -41,7 +41,7 @@
                             <td>{{ $soal->pertanyaan }}</td>
                             <td>{{ strtoupper($soal->jawaban) }}</td>
                             <td class="space-x-2">
-                                {{-- Bisa ganti jadi modal edit --}}
+                            
                                 <form action="{{ route('admin.kursus.delete', $soal->id) }}" method="POST" class="inline">
                                     @csrf @method('DELETE')
                                     <button onclick="return confirm('Hapus?')" class="text-red-600">Hapus</button>

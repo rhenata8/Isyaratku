@@ -12,25 +12,21 @@ class C_User_Materi extends Controller
     {
         $query = Materi_admin::query();
 
-        // Fitur pencarian sederhana (opsional, jika Anda ingin ada pencarian di sisi user)
         if ($request->has('search') && $request->search != '') {
             $query->where('judul', 'like', '%' . $request->search . '%')
                   ->orWhere('isi', 'like', '%' . $request->search . '%');
         }
 
         // Ambil semua materi, bisa juga ditambahkan paginasi jika materi banyak
-        $materis = $query->orderBy('created_at', 'desc')->paginate(9); // 9 materi per halaman
+        $materis = $query->orderBy('created_at', 'desc')->paginate(9);
         $user = Auth::user();
 
         return view('user.materi.index', compact('materis', 'user'));
     }
 
-    /**
-     * Menampilkan detail lengkap dari sebuah materi.
-     */
-    public function show(Materi_admin $materi) // Menggunakan Route Model Binding
+    public function show(Materi_admin $materi)
     {
-        $user = Auth::user(); // Mengambil data user yang sedang login
+        $user = Auth::user(); 
         return view('user.materi.show', compact('materi', 'user'));
     }
 }

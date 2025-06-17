@@ -87,18 +87,22 @@ Route::middleware(['auth'])->group(function () {
     // ... (rute profil user, homepage_user) ...
 
     // Rute Kuis untuk User
-    Route::get('/kuis', [C_user_kuis::class, 'index'])->name('user.kuis.index'); // Tampilan pilih level
-    Route::get('/kuis/start/{level}', [C_user_kuis::class, 'startQuiz'])->name('user.kuis.start'); // Memulai kuis
-    Route::get('/kuis/{level}/question/{index}', [C_user_kuis::class, 'showQuestion'])->name('user.kuis.question'); // Tampilkan soal per halaman
-    Route::post('/kuis/{level}/submit', [C_user_kuis::class, 'submitAnswer'])->name('user.kuis.submit'); // Submit jawaban
-    Route::get('/kuis/{level}/review', [C_user_kuis::class, 'reviewQuiz'])->name('user.kuis.review'); // Tampilan review & skor
-    Route::get('/kuis/history', [C_user_kuis::class, 'history'])->name('user.kuis.history'); // Riwayat kuis user
+    Route::get('/kuis', [C_user_kuis::class, 'index'])->name('user.kuis.index');
+    Route::get('/kuis/start/{level}', [C_user_kuis::class, 'startQuiz'])->name('user.kuis.start');
+    Route::get('/kuis/{level}/question/{index}', [C_user_kuis::class, 'showQuestion'])->name('user.kuis.question');
+    Route::post('/kuis/{level}/submit', [C_user_kuis::class, 'submitAnswer'])->name('user.kuis.submit');
+    Route::get('/kuis/{level}/review', [C_user_kuis::class, 'reviewQuiz'])->name('user.kuis.review');
+    Route::get('/kuis/history', [C_user_kuis::class, 'history'])->name('user.kuis.history');
 });
 
 Route::resource('materi-user', C_User_Materi::class)->parameters(['materi-user' => 'materi'])->names([
         'index' => 'user.materi.index',
         'show' => 'user.materi.show',
-        // Tidak ada create, store, edit, update, destroy untuk user
     ]);
 
+
+    // --- TAMBAHKAN RUTE LAPORAN KUIS ADMIN INI ---
+    Route::get('/admin/laporan/kuis', [Akun_admin::class, 'quizReportIndex'])->name('admin.laporan.kuis');
+    // ---------------------------------------------
+// });
 

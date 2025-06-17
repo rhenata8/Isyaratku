@@ -19,8 +19,7 @@
     <header class="bg-[#0B3B2E] text-white flex items-center justify-between px-6 py-4">
         <h1 class="text-3xl font-bold">Isyaratku</h1>
 
-        {{-- Bagian Profil Admin di Header --}}
-        {{-- <h1 class="text-3xl font-bold">Isyaratku</h1> --}}
+
         <div class="ml-auto">
             <a href="{{ route('admin/profile') }}">
                 <img src="https://ui-avatars.com/api/?name=Admin" alt="Profile"
@@ -40,6 +39,6 @@
             @yield('content')
         </main>
     </div>
-
+    @stack('scripts')
 </body>
 </html>

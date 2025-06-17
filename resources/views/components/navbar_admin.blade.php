@@ -7,12 +7,13 @@
     <h1 class="text-xl font-bold">IsyaratKu</h1>
     <div class="flex items-center gap-2 ml-auto">
         @if($admin)
-        <a href="{{ route('admin/profile') }}">
-        <img
-        src="{{ $admin->foto ? asset('storage/foto/' . $admin->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($admin->nama_lengkap) }}"
-        alt="Foto Admin"~
-        class="w-10 h-10 rounded-full object-cover">
-        <span class="font-semibold">{{ $admin->nama_lengkap }}</span>
+            <a href="{{ route('admin/profile') }}" class="flex items-center gap-2">
+                <img
+                    src="{{ $admin->foto ? asset('storage/foto/' . $admin->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($admin->nama_lengkap) }}"
+                    alt="Foto Admin"
+                    class="w-10 h-10 rounded-full object-cover">
+                <span class="font-semibold">{{ $admin->nama_lengkap }}</span>
+            </a>
         @else
             <span class="font-semibold">Admin</span>
         @endif

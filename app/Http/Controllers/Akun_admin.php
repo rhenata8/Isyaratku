@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\M_Akun_Admin;
+use App\Models\Quizattempt;
 
 class akun_admin extends Controller
 {
@@ -58,7 +59,7 @@ class akun_admin extends Controller
 
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'phone' => 'nullable|string|max:20', // Tambahkan validasi untuk phone
+            'phone' => 'nullable|string|max:20',
             'password' => 'nullable|string|min:8|confirmed',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -68,7 +69,7 @@ class akun_admin extends Controller
         $admin->phone = $validated['phone'];
 
         if ($request->hasFile('foto')) {
-            if ($admin->foto && Storage::disk('public')->exists('foto/' . $admin->foto)) { // Perbaikan path exists
+            if ($admin->foto && Storage::disk('public')->exists('foto/' . $admin->foto)) {
                 Storage::disk('public')->delete('foto/' . $admin->foto);
             }
 
@@ -142,6 +143,17 @@ class akun_admin extends Controller
     {
         session()->forget(['admin_logged_in', 'admin_id']);
         return redirect()->route('login');
+    }
+
+    public function quizReportIndex(Request $request)
+    {
+        // Mengambil semua riwayat kuis, dengan paginasi
+        // Eager load relasi 'user' untuk mendapatkan data nama pengguna
+        $attempts = Quizattempt::with('user') // Memuat relasi user dari Quizattempt
+                                ->orderBy('completed_at', 'desc') // Urutkan berdasarkan waktu selesai
+                                ->paginate(10); // 10 riwayat per halaman
+
+        return view('admin.laporan.index', compact('attempts'));
     }
 
 

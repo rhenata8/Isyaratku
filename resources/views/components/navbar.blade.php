@@ -10,15 +10,7 @@
         <a class="text-white text-sm select-none" href="{{ route('user.materi.index') }}">Materi</a>
 
     </div>
-    {{-- <div class="hidden md:flex gap-2 mr-8">
-            <span class="mt-3.5 text-white font-medium text-sm">
-                {{ $user ? $user->nama_lengkap : 'Guest' }}
-            </span>
-            <a href="{{ route('user/profile') }}">
-                <img src="{{ asset('storage/foto/' . $user->foto) }}" alt="Foto Profil"
-                     class="w-12 h-12 rounded-full object-cover shadow">
-            </a>
-        </div> --}}
+  
         <div class="hidden md:flex gap-2 mr-8">
     @isset($user)
         <span class="mt-3.5 text-white font-medium text-sm">

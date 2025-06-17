@@ -5,14 +5,14 @@
         <a href="{{ route('admin/dashboard') }}" class="block hover:text-blue-500">
             <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
         </a>
-        {{-- Link baru untuk Materi --}}
+
         <a href="{{ route('materi.index') }}" class="block hover:text-blue-500">
             <i class="fas fa-book-open mr-2"></i> Materi
         </a>
         <a href="{{ route('admin.kursus.index') }}" class="block hover:text-blue-500">
             <i class="fas fa-question-circle mr-2"></i> Kuis
         </a>
-        <a href="#" class="block hover:text-blue-500">
+        <a href="{{ route('admin.laporan.kuis') }}" class="block hover:text-blue-500">
             <i class="fas fa-chart-bar mr-2"></i> Laporan Kuis
         </a>
     </nav>

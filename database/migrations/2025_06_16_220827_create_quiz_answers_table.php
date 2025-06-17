@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('quiz_attempt_id')->constrained('quiz_attempts')->onDelete('cascade');
             $table->foreignId('question_id')->constrained('kuis')->onDelete('cascade'); // Foreign key ke tabel kuis
-            $table->string('user_answer', 1); // Jawaban user (a, b, c, d)
+            $table->string('user_answer', 1); 
             $table->boolean('is_correct')->default(false);
             $table->timestamps();
         });

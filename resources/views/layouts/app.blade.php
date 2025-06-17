@@ -16,12 +16,12 @@
 <body class="bg-[#F0F1E9] text-[#1B1B1B]">
 
     @hasSection('navbar')
-        @yield('navbar') {{-- Hanya akan diisi jika di halaman ada @section('navbar') --}}
+        @yield('navbar')
     @else
-        @include('components.navbar') {{-- Default navbar --}}
+        @include('components.navbar') 
     @endif
 
-    
+
     {{-- Halaman Konten --}}
     <main class="min-h-screen">
         @yield('content')

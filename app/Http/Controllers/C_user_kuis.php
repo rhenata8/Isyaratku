@@ -9,17 +9,12 @@ use App\Models;
 use App\Models\QuizAnswer;
 use App\Models\Quizattempt;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Jika user login pakai sistem Auth Laravel
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class C_user_kuis extends Controller
 {
-    //  public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
 
-    // Menampilkan pilihan level kuis untuk user
     public function index()
     {
         $levels = ['pemula', 'menengah', 'mahir'];
@@ -175,7 +170,6 @@ class C_user_kuis extends Controller
             $attempt->save();
         }
 
-        // Hapus data kuis dari sesi
         $request->session()->forget([
             'quiz_questions_' . $level,
             'current_question_index_' . $level,
@@ -187,7 +181,7 @@ class C_user_kuis extends Controller
         return view('user.kuis.review', compact('level', 'score', 'quizDetails', 'attempt'));
     }
 
-    // Menampilkan riwayat kuis user
+
     public function history()
     {
         $user = Auth::user();

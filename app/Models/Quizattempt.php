@@ -10,7 +10,7 @@ class Quizattempt extends Model
 {
     use HasFactory;
 
-    protected $table = 'quiz_attempts'; // Pastikan nama tabel di DB Anda adalah quiz_attempts
+    protected $table = 'quiz_attempts'; 
 
     protected $fillable = [
         'user_id',

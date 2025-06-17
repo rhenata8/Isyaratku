@@ -1,4 +1,4 @@
-@extends('layouts.app') {{-- Asumsikan Anda punya layout default untuk user --}}
+@extends('layouts.app') 
 
 @section('content')
     <div class="container mx-auto p-6">
@@ -18,8 +18,7 @@
             <div class="p-8">
                 <h1 class="text-4xl font-bold mb-5 text-gray-800">{{ $materi->judul }}</h1>
                 <div class="prose max-w-none text-gray-700 leading-relaxed text-lg">
-                    {{-- Gunakan {!! !!} untuk merender HTML jika isi materi disimpan sebagai HTML --}}
-                    {{-- Jika hanya teks biasa, gunakan nl2br(e($materi->isi)) untuk keamanan --}}
+
                     {!! nl2br(e($materi->isi)) !!}
                 </div>
             </div>

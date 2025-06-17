@@ -1,4 +1,4 @@
-@extends('layouts.app') {{-- Asumsikan Anda punya layout default untuk user --}}
+@extends('layouts.app')
 
 @php
 use Illuminate\Support\Str;
@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
     <div class="container mx-auto p-6">
         <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Daftar Materi Pembelajaran</h2>
 
-        {{-- Form Pencarian (Opsional untuk user) --}}
+        {{-- Form Pencarian --}}
         <div class="mb-6 max-w-xl mx-auto">
             <form action="{{ route('user.materi.index') }}" method="GET" class="flex items-center bg-white rounded-full shadow-md overflow-hidden">
                 <input type="text" name="search" placeholder="Cari materi..."
@@ -48,7 +48,7 @@ use Illuminate\Support\Str;
             </div>
 
             <div class="mt-10">
-                {{ $materis->links() }} {{-- Tampilkan link paginasi --}}
+                {{ $materis->links() }}
             </div>
         @endif
     </div>
