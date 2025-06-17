@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('navbar')
+    @include('components.navbar_admin')
+@endsection
+
 @section('content')
     <h2 class="text-2xl font-bold mb-6">Analytics</h2>
 
@@ -20,6 +24,5 @@
             <span class="text-sm text-gray-500">Last 7 Days</span>
         </div>
         <div class="h-40 bg-yellow-300 rounded"></div>
-        {{-- Anda bisa menambahkan grafik di sini menggunakan library JS seperti Chart.js --}}
     </div>
 @endsection

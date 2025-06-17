@@ -19,24 +19,13 @@
         <h1 class="text-3xl font-bold">Isyaratku</h1>
 
         {{-- Bagian Profil Admin di Header --}}
-        <div class="ml-auto flex items-center gap-2"> {{-- Tambahkan flex dan items-center --}}
-            {{-- Tampilkan nama admin jika ada --}}
-            <span class="text-white font-medium text-lg mr-2">
-                {{ $admin ? $admin->nama_lengkap : 'Guest' }}
-            </span>
-
-            {{-- Link ke halaman profil admin --}}
-            <a href="{{ route('admin/profile') }}"> {{-- Pastikan menggunakan notasi titik: admin.profile --}}
-                @if ($admin && $admin->foto)
-                    {{-- Tampilkan foto dari storage --}}
-                    <img src="{{ asset('storage/foto/' . $admin->foto) }}" alt="Foto Profil"
-                         class="w-12 h-12 rounded-full object-cover shadow">
-                @else
-                    {{-- Tampilkan avatar default jika tidak ada foto atau admin tidak ditemukan --}}
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($admin ? $admin->nama_lengkap : 'Admin') }}&background=EBF4FF&color=7F9CF5&size=128" alt="Profil Default"
-                         class="w-12 h-12 rounded-full object-cover shadow">
-                @endif
+        {{-- <h1 class="text-3xl font-bold">Isyaratku</h1> --}}
+        <div class="ml-auto">
+            <a href="{{ route('admin/profile') }}">
+                <img src="https://ui-avatars.com/api/?name=Admin" alt="Profile"
+                    class="w-12 h-12 rounded-full object-cover">
             </a>
+
         </div>
     </header>
 
