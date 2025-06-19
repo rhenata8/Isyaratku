@@ -78,7 +78,7 @@ Route::get('/admin/dashboard', [C_Dashboard::class, 'index'])->name('admin/dashb
 // Kursus
     Route::get('/admin/kursus', [C_kuis::class, 'index'])->name('admin.kursus.index');
     Route::get('/admin/kursus/{level}', [C_kuis::class, 'showLevel'])->name('admin.kursus.level');
-    Route::post('/admin/kursus/store', [C_kuis::class, 'create'])->name('admin.kursus.store');
+    Route::post('/admin/kursus/{level}/store', [C_kuis::class, 'create'])->name('admin.kursus.store');
     Route::put('/admin/kursus/update/{id}', [C_kuis::class, 'update'])->name('admin.kursus.update');
     Route::delete('/admin/kursus/delete/{id}', [C_kuis::class, 'delete'])->name('admin.kursus.delete');
 

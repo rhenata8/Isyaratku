@@ -52,6 +52,11 @@ class C_user_kuis extends Controller
     // Menampilkan soal kuis per halaman
     public function showQuestion(Request $request, $level, $index)
     {
+        if (!Auth::check()) { // Cek apakah user login
+            return redirect()->route('login'); // Atau ke halaman lain yang sesuai
+        }
+
+        $user = Auth::user();
         $questionIds = $request->session()->get('quiz_questions_' . $level);
         $currentIndex = $request->session()->get('current_question_index_' . $level, 0);
         $quizAttemptId = $request->session()->get('quiz_attempt_id_' . $level);
@@ -78,6 +83,10 @@ class C_user_kuis extends Controller
     // Memproses jawaban user dan pindah ke soal berikutnya
     public function submitAnswer(Request $request, $level)
     {
+        if (!Auth::check()) { // Cek apakah user login
+            return response()->json(['success' => false, 'message' => 'Anda belum login.'], 401);
+        }
+        $user = Auth::user();
         $request->validate([
             'question_id' => 'required|exists:kuis,id',
             'user_answer' => 'required|in:a,b,c,d',

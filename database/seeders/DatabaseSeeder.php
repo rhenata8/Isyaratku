@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
 {
    $this->call(data_akun_admin::class);
+   $this->call(Materi::class);
+    $this->call(Kuis::class);
 
 }
 

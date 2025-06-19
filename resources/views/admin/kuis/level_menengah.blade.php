@@ -6,7 +6,7 @@
 <h2 class="text-xl font-bold mb-4 capitalize">Kuis Level {{ $level }}</h2>
 
 {{-- Form Tambah --}}
-<form id="add-question-form" method="POST" class="bg-white p-4 rounded shadow mb-4">
+<form id="add-question-form" action="{{ route('admin.kursus.store', ['level' => $level]) }}" method="POST" class="bg-white p-4 rounded shadow mb-4">
     @csrf
     <input type="hidden" name="level" value="{{ $level }}">
     <input type="text" name="pertanyaan" placeholder="Pertanyaan" class="w-full mb-2 p-2 border" required>
@@ -21,6 +21,7 @@
         <option value="d">D</option>
     </select>
     <button type="submit" class="bg-green-700 text-white px-4 py-2 rounded">Tambah Soal</button>
+    <a href="{{ route('admin.kursus.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Kembali</a>
 </form>
 
 {{-- Pesan Sukses/Error AJAX --}}
