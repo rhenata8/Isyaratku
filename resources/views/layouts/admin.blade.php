@@ -16,7 +16,7 @@
 
     {{-- Header --}}
     @include('components.navbar_admin')
-    <header class="bg-[#0B3B2E] text-white flex items-center justify-between px-6 py-4">
+    <header class="bg-[#0B3B2E] text-white flex items-center justify-between px-6 py-4 fixed top-0">
         <h1 class="text-3xl font-bold">Isyaratku</h1>
 
 
@@ -29,13 +29,14 @@
         </div>
     </header>
 
+
     {{-- Body - Konten Utama dan Sidebar --}}
     <div class="flex min-h-screen overflow-hidden">
         {{-- Sidebar --}}
         @include('components/admin/sidebar')
 
         {{-- Main Content --}}
-        <main class="flex-1 p-6 overflow-y-auto">
+        <main class="flex-1 p-6 overflow-y-auto mt-[72px] ml-64">
             @yield('content')
         </main>
     </div>

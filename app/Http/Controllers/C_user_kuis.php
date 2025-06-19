@@ -77,7 +77,7 @@ class C_user_kuis extends Controller
             return redirect()->route('user.kuis.index')->with('error', 'Soal tidak ditemukan.');
         }
 
-        return view('user.kuis.question', compact('question', 'level', 'index'));
+        return view('user.kuis.question', compact('question', 'level', 'index', 'user'));
     }
 
     // Memproses jawaban user dan pindah ke soal berikutnya
@@ -192,11 +192,14 @@ class C_user_kuis extends Controller
 
 
     public function history()
-    {
-        $user = Auth::user();
-        $attempts = QuizAttempt::where('user_id', Auth::id())
-                ->orderBy('completed_at', 'desc')
-                ->paginate(10);
-        return view('user.kuis.history', compact('attempts'));
-    }
+{
+    $user = Auth::user();
+
+    $quizAttempts = Quizattempt::where('user_id', $user->id)
+        ->with('user')
+        ->orderByDesc('created_at')
+        ->get();
+
+    return view('user.kuis.history', compact('quizAttempts', 'user'));
+}
 }

@@ -1,15 +1,6 @@
 <footer class="bg-[#1B3B2D] text-white py-10 px-6 sm:px-12">
     <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8">
-        <div>
-            <h4 class="font-semibold mb-4">Navigasi</h4>
-            <ul class="space-y-2 text-sm">
-                <li><a href="#" class="hover:underline">Beranda</a></li>
-                <li><a href="#" class="hover:underline">Kursus</a></li>
-                <li><a href="#" class="hover:underline">Artikel</a></li>
-                <li><a href="#" class="hover:underline">Event</a></li>
-                <li><a href="#" class="hover:underline">Tentang Kami</a></li>
-            </ul>
-        </div>
+       
         <div>
             <h4 class="font-semibold mb-4">Kontak</h4>
             <p class="text-sm leading-relaxed max-w-xs">

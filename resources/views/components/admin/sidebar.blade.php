@@ -1,6 +1,4 @@
-
-
-<aside class="w-64 bg-white border-r min-h-screen p-4">
+<aside class="w-64 bg-white border-r min-h-screen p-4 fixed top-[72px] left-0 z-40">
     <nav class="space-y-4">
         <a href="{{ route('admin/dashboard') }}" class="block hover:text-blue-500">
             <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
